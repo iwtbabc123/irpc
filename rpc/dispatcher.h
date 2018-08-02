@@ -19,8 +19,8 @@ public:
 	void StartServer(uint16_t port);
 
 	void OnAccept(int fd);
-    void OnRead(int fd);
-    void OnWrite(int fd);
+    void OnRead(int fd, struct ev_io* watcher);
+    void OnWrite(int fd, struct ev_io* watcher);
 
 	static void accept_cb(struct ev_loop* loop, struct ev_io* watcher, int revents);
     //接受客户端读写

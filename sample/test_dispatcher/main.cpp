@@ -1,11 +1,19 @@
+#include <stdlib.h>
 #include "dispatcher.h"
 
 using namespace irpc;
 
+void siginthandler(int param)
+{
+  printf("User pressed Ctrl+C\n");
+  exit(1);
+}
+
 int main(){
-	Dispatcher dispatcher;
+	signal(SIGINT, siginthandler);
+    signal(SIGPIPE, SIG_IGN);
+
+	Dispatcher& dispatcher = Dispatcher::getInstance();
 	dispatcher.StartServer(8888);
 	return 0;
 }
-
-//g++ test_dispatcher_server.cpp ../rpc/dispatcher.cpp -Irpc -o ../bin/test_dispatcher_server

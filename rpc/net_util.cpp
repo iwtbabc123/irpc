@@ -13,10 +13,11 @@ int netlib_socket(){
 	if (sockfd < 0){
 		return -1;
 	}
-
+	/*
 	if (netlib_setnonblocking(sockfd) < 0){
 		return -1;
 	}
+	*/
 	return sockfd;
 }
 

@@ -36,11 +36,14 @@ void Dispatcher::StartServer(uint16_t port){
 	ev_io_set(&io_watcher, fd, EV_READ);
 	ev_io_start(loop_, &io_watcher);
 
+	printf("StartServer:%p\n",this);
+
 	ev_run(loop_, 0);
 }
 
 void Dispatcher::OnAccept(int fd){
 	printf("EpollServer::OnAccept %d\n", fd);
+	printf("StartServer:%p\n",this);
 
 	int conn_fd = netlib_accept(fd);
 	if (conn_fd < 0){
@@ -48,6 +51,7 @@ void Dispatcher::OnAccept(int fd){
 	}
 
 	netlib_setnonblocking(conn_fd);
+	printf("netlib_setnonblocking %d\n",conn_fd);
 
 	struct ev_io* conn_ev = (struct ev_io*) malloc(sizeof(struct ev_io));
 	if (conn_ev == nullptr){
@@ -60,26 +64,30 @@ void Dispatcher::OnAccept(int fd){
 	ev_io_start(loop_, conn_ev);
 }
 
-void Dispatcher::OnRead(int fd){
+void Dispatcher::OnRead(int fd, struct ev_io* watcher){
 	printf("Dispatcher::OnRead:%d\n", fd);
 
 	char buffer[1024] = {0};
 
 	int bytes = netlib_recv(fd, buffer, 1024);
+	printf("Dispatcher::OnRead %d bytes\n", bytes);
 	if (bytes == 0){  //close
+		ev_io_stop(loop_, watcher);
 	}
 	else if(bytes < 0){  //error
+		ev_io_stop(loop_, watcher);
 	}
 	else{
 		char* socket_data = (char*)malloc(sizeof(char) * bytes);
 		memcpy(socket_data, buffer, bytes);
 		//std::string str_buf(buffer);
-		printf("Dispatcher::OnRead %d bytes\n", bytes);
+		//printf("Dispatcher::OnRead %d bytes\n", bytes);
 		//MessageQueue::getInstance().MQ2S_Push(fd, fd_type, socket_data, bytes);
+
 	}
 }
 
-void Dispatcher::OnWrite(int fd){
+void Dispatcher::OnWrite(int fd, struct ev_io* watcher){
 	printf("EpollServer::OnWrite:%d\n",fd);
 	/*
 	UP_Channel* channel = this->GetChannel(fd, fd_type);
@@ -142,10 +150,10 @@ void Dispatcher::r_w_cb(struct ev_loop* loop, struct ev_io* watcher, int revents
 	}
 
 	if (EV_READ & revents){
-		Dispatcher::getInstance().OnRead(fd);
+		Dispatcher::getInstance().OnRead(fd, watcher);
 	}
 	if (EV_WRITE & revents){
-		Dispatcher::getInstance().OnWrite(fd);
+		Dispatcher::getInstance().OnWrite(fd, watcher);
 	}
 }
 
