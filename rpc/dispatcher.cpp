@@ -29,8 +29,8 @@ void Dispatcher::StartServer(uint16_t port){
 		exit(EXIT_FAILURE);
 	}
 
-	loop_ = ev_default_loop(EVBACKEND_EPOLL | EVFLAG_NOENV);
-
+	//loop_ = ev::default_loop();
+	/*
 	struct ev_io io_watcher;
 	ev_init(&io_watcher, accept_cb);
 	ev_io_set(&io_watcher, fd, EV_READ);
@@ -39,6 +39,10 @@ void Dispatcher::StartServer(uint16_t port){
 	printf("StartServer:%p\n",this);
 
 	ev_run(loop_, 0);
+	*/
+	io_watcher_.set<Dispatcher, &Dispatcher::accept_cb>(this);
+	io_watcher_.start(fd, ev::READ);
+	loop_.run(0);
 }
 
 void Dispatcher::OnAccept(int fd){
@@ -52,19 +56,32 @@ void Dispatcher::OnAccept(int fd){
 
 	netlib_setnonblocking(conn_fd);
 	printf("netlib_setnonblocking %d\n",conn_fd);
-
+	/*
 	struct ev_io* conn_ev = (struct ev_io*) malloc(sizeof(struct ev_io));
 	if (conn_ev == nullptr){
 		printf("malloc error in accept_cb\n");
 		return;
 	}
+	*/
 
+	//ev::io* io_watcher = (ev::io*) malloc(sizeof(ev::io));
+	ev::io* io_watcher = new ev::io;
+	if (io_watcher == nullptr){
+		printf("malloc error in accept_cb\n");
+		return;
+	}
+
+	io_watcher->set<Dispatcher, &Dispatcher::r_w_cb>(this);
+	io_watcher->start(conn_fd, ev::READ);
+	
+	/*
 	ev_init(conn_ev, r_w_cb);
 	ev_io_set(conn_ev, conn_fd, EV_READ);
 	ev_io_start(loop_, conn_ev);
+	*/
 }
 
-void Dispatcher::OnRead(int fd, struct ev_io* watcher){
+void Dispatcher::OnRead(int fd, ev::io& watcher){
 	printf("Dispatcher::OnRead:%d\n", fd);
 
 	char buffer[1024] = {0};
@@ -72,10 +89,12 @@ void Dispatcher::OnRead(int fd, struct ev_io* watcher){
 	int bytes = netlib_recv(fd, buffer, 1024);
 	printf("Dispatcher::OnRead %d bytes\n", bytes);
 	if (bytes == 0){  //close
-		ev_io_stop(loop_, watcher);
+		//ev_io_stop(loop_, watcher);
+		watcher.stop();
 	}
 	else if(bytes < 0){  //error
-		ev_io_stop(loop_, watcher);
+		//ev_io_stop(loop_, watcher);
+		watcher.stop();
 	}
 	else{
 		char* socket_data = (char*)malloc(sizeof(char) * bytes);
@@ -87,7 +106,7 @@ void Dispatcher::OnRead(int fd, struct ev_io* watcher){
 	}
 }
 
-void Dispatcher::OnWrite(int fd, struct ev_io* watcher){
+void Dispatcher::OnWrite(int fd, ev::io& watcher){
 	printf("EpollServer::OnWrite:%d\n",fd);
 	/*
 	UP_Channel* channel = this->GetChannel(fd, fd_type);
@@ -130,30 +149,30 @@ void Dispatcher::OnWrite(int fd, struct ev_io* watcher){
 	*/
 }
 
-void Dispatcher::accept_cb(struct ev_loop* loop, struct ev_io* watcher, int revents){
-	int fd = watcher->fd;
+void Dispatcher::accept_cb(struct ev::io& watcher, int revents){
+	int fd = watcher.fd;
 
-	if (EV_ERROR & revents){
+	if (ev::ERROR & revents){
 		//LogDebug("error event in accept\n");
 		return;
 	}
 	printf("accept_cb \n");
-	Dispatcher::getInstance().OnAccept(fd);
+	OnAccept(fd);
 }
 
-void Dispatcher::r_w_cb(struct ev_loop* loop, struct ev_io* watcher, int revents){
-	int fd = watcher->fd;
+void Dispatcher::r_w_cb(struct ev::io& watcher, int revents){
+	int fd = watcher.fd;
 	//LogDebug("r_w_cb %d,%d\n", fd, revents);
-	if (EV_ERROR & revents){
+	if (ev::ERROR & revents){
 		//LogError("error event in read or write\n");
 		return;
 	}
 
-	if (EV_READ & revents){
-		Dispatcher::getInstance().OnRead(fd, watcher);
+	if (ev::READ & revents){
+		OnRead(fd, watcher);
 	}
 	if (EV_WRITE & revents){
-		Dispatcher::getInstance().OnWrite(fd, watcher);
+		OnWrite(fd, watcher);
 	}
 }
 

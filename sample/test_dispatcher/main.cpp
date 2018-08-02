@@ -13,7 +13,8 @@ int main(){
 	signal(SIGINT, siginthandler);
     signal(SIGPIPE, SIG_IGN);
 
-	Dispatcher& dispatcher = Dispatcher::getInstance();
+	//Dispatcher& dispatcher = Dispatcher::getInstance();
+	Dispatcher dispatcher;
 	dispatcher.StartServer(8888);
 	return 0;
 }
