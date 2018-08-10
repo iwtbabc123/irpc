@@ -2,7 +2,6 @@
 #include <fcntl.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <arpa/inet.h>
 #include <sys/eventfd.h>
 #include <string.h>
 #include "socket_util.h"

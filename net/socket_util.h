@@ -1,6 +1,7 @@
 #ifndef __NET_SOCKET_UTIL_H__
 #define __NET_SOCKET_UTIL_H__
 
+#include <arpa/inet.h>
 #include <stdint.h>
 
 namespace inet{
