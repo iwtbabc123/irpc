@@ -17,7 +17,8 @@ public:
 
 	void listen();
 
-	void OnNewConnection(ev::io& watcher, int revents);
+	void NewConnectionCallback(ev::io& watcher, int revents);
+	void OnAccept();
 
 private:
 	Dispatcher* dispatcher_;

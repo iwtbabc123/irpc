@@ -5,15 +5,25 @@
 
 namespace inet{
 
+class Dispatcher;
+
 class Channel{
 
 public:
-	Channel();
+	Channel(Dispatcher* dispatcher, int fd);
 	~Channel();
 
+	void start();
+
+	void OnEvent(ev::io& io_watcher, int revents);
+
+	void OnRead();
+	void OnWrite();
+
 private:
+	Dispatcher* dispatcher_;
 	int fd_;
-	ev::io* io_watcher_;
+	ev::io io_watcher_;
 
 };
 

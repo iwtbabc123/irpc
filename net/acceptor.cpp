@@ -39,12 +39,30 @@ void Acceptor::listen(){
 
 	fd_ = fd;
 
-	io_watcher_.set<Acceptor, &Acceptor::OnNewConnection>(this);
+	io_watcher_.set<Acceptor, &Acceptor::NewConnectionCallback>(this);
 	io_watcher_.start(fd_,ev::READ);
 }
 
-void Acceptor::OnNewConnection(ev::io& watcher, int revents){
-	printf("OnNewConnection\n");
+void Acceptor::NewConnectionCallback(ev::io& watcher, int revents){
+	printf("NewConnectionCallback\n");
+	if (ev::ERROR & revents){
+		return;
+	}
+
+	OnAccept();
+
+}
+
+void Acceptor::OnAccept(){
+	int conn_fd = netlib_accept(fd_);
+	if (conn_fd < 0){
+		printf("accept error\n");
+	}
+
+	netlib_setnonblocking(conn_fd);
+	printf("netlib_setnonblocking %d\n",conn_fd);
+
+	dispatcher_->NewConnection(conn_fd);
 }
 
 }
