@@ -11,7 +11,7 @@ class Channel{
 
 public:
 	Channel(Dispatcher* dispatcher, int fd);
-	~Channel();
+	virtual ~Channel();
 
 	void start();
 

@@ -11,7 +11,7 @@ class TcpServer{
 
 public:
 	TcpServer(Dispatcher* dispatcher);
-	~TcpServer();
+	virtual ~TcpServer();
 
 	void start();
 

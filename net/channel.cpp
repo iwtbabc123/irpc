@@ -53,7 +53,38 @@ void Channel::OnRead(){
 }
 
 void Channel::OnWrite(){
+	/*
+	int events = EV_READ;
 
+	while(!(*channel)->empty())
+	{
+		auto mq = (*channel)->pop_front();
+
+		LogDebug("EpollServer::OnWrite send_len %d\n", mq->Size());
+
+		char* tmp = (char*)malloc(sizeof(char) * mq->Size());
+		memcpy(tmp, mq->Buffer(), mq->Size());
+		//TODO,只发送一部分mq，剩余的尚未处理
+		int ret = netlib_send(fd, tmp, mq->Size());
+		if (ret == -1)  //TODO,发送不成功要重新发送
+		{
+			LogWarning("netlib_send -1\n");
+			events |= EV_WRITE;
+			break;
+		}
+		else if (ret == 0)
+		{	
+			LogDebug("netlib_send 0\n");
+			break;
+		}
+		else if (ret > 0)
+		{
+			LogDebug("netlib_send %d\n", ret);
+		}
+	}
+
+	UpdateEvent(fd, events, channel);
+	*/
 }
 
 }
