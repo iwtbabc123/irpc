@@ -2,6 +2,7 @@
 #include "channel.h"
 #include "dispatcher.h"
 #include "socket_util.h"
+#include "package.h"
 
 namespace inet{
 
@@ -47,8 +48,21 @@ void Channel::OnRead(){
 		dispatcher_->DelConnection(fd_);
 	}
 	else{
-		char* socket_data = (char*)malloc(sizeof(char) * bytes);
-		memcpy(socket_data, buffer, bytes);
+		//char* socket_data = (char*)malloc(sizeof(char) * bytes);
+		//memcpy(socket_data, buffer, bytes);
+		in_buffer_.Write(buffer, bytes);
+
+		Package* pack = nullptr;
+		while(nullptr != (pack = Package::ReadPackage(in_buffer_.GetBuffer(), in_buffer_.GetWriteOffset()))){
+			uint32_t package_len = pack->GetLength();
+			
+			//deal real package
+			printf("ReadPackage:%d,%d,%s\n",pack->GetServiceId(),pack->GetCommandId(),pack->GetBodyData());
+
+			in_buffer_.Read(nullptr, package_len);
+			delete pack;
+			pack = nullptr;
+		}
 	}
 }
 

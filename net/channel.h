@@ -2,10 +2,13 @@
 #define __NET_CHANNEL_H__
 
 #include <ev++.h>
+#include "buffer.h"
 
 namespace inet{
 
 class Dispatcher;
+
+//typedef std::function<void()> ReadEventCallback;
 
 class Channel{
 
@@ -20,10 +23,17 @@ public:
 	void OnRead();
 	void OnWrite();
 
+	//void SetReadCallback(ReadEventCallback cb){readCallack_ = std::move(cb);}
+
 private:
 	Dispatcher* dispatcher_;
 	int fd_;
 	ev::io io_watcher_;
+
+	Buffer in_buffer_;  //read socket buffer
+	Buffer out_buffer_;  //write to socket buffer
+
+	//ReadEventCallback readCallack_;
 
 };
 

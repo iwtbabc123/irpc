@@ -15,6 +15,8 @@ public:
 
 	void start();
 
+	//virtual HandlePackage();
+
 private:
 	Dispatcher* dispatcher_;
 };

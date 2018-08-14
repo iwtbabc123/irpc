@@ -7,7 +7,7 @@ INCLUDES= -I/usr/local/include -I../../net
 # user modify: subdir, target and objects  
 VPATH   = ../../net
 EXENAME = ../../bin/test_socket  
-OBJECTS = socket_util.o dispatcher.o acceptor.o channel.o tcp_server.o main.o
+OBJECTS = socket_util.o dispatcher.o acceptor.o channel.o buffer.o byte_stream.o package.o tcp_server.o main.o
   
 # make target  
 all:${EXENAME} cleantmp

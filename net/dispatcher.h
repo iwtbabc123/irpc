@@ -30,6 +30,8 @@ private:
 	ev::default_loop loop_;
 	typedef std::map<int, ChannelPtr> ChannelMap;
 	ChannelMap channel_map_;
+
+
 };
 
 }

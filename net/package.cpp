@@ -9,6 +9,10 @@ Package::Package(){
 	header_.command_id = 0;
 }
 
+Package::~Package(){
+	
+}
+
 unsigned char* Package::GetBuffer(){
 	return buffer_.GetBuffer();
 }
