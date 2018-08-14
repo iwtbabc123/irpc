@@ -11,7 +11,7 @@ public:
 	Buffer();
 	~Buffer();
 
-	char* GetBuffer(){return buffer_;}
+	unsigned char* GetBuffer(){return buffer_;}
 	uint32_t GetAllocSize(){return alloc_size_;}
 	uint32_t GetWriteOffset(){return write_offset_;}
 	void IncWriteOffset(uint32_t len){write_offset_+=len;}
@@ -21,7 +21,7 @@ public:
 	uint32_t Read(void* buf, uint32_t len);
 
 private:
-	char* buffer_;
+	unsigned char* buffer_;
 	uint32_t alloc_size_;
 	uint32_t write_offset_;
 

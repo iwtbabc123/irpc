@@ -22,7 +22,7 @@ Buffer::~Buffer(){
 void Buffer::Extend(uint32_t len){
 	alloc_size_ = write_offset_ + len;
 	alloc_size_ += alloc_size_ >> 2;
-	char* new_buf = (char*)realloc(buffer_, alloc_size_);
+	unsigned char* new_buf = (unsigned char*)realloc(buffer_, alloc_size_);
 	buffer_ = new_buf;
 }
 
