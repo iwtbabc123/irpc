@@ -29,8 +29,12 @@ void Dispatcher::DelConnection(int fd){
 	}
 }
 
-void Dispatcher::HandlePackage(Package* pack){
-	handlePackageCB_(pack);
+void Dispatcher::HandlePackage(Channel* channel, Package* pack){
+	handlePackageCB_(channel, pack);
+}
+
+void Dispatcher::SendPackage(Channel* channel, Package* pack){
+	channel->Send(pack->GetBuffer(), pack->GetLength());
 }
 
 }

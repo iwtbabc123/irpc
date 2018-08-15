@@ -19,7 +19,7 @@ typedef std::unique_ptr<Channel> ChannelPtr;
 class Dispatcher{
 
 public:
-	typedef std::function<void(Package*)> HandlePackageCB;
+	typedef std::function<void(Channel*,Package*)> HandlePackageCB;
 
 	Dispatcher(uint16_t port);
 
@@ -28,7 +28,8 @@ public:
 	void NewConnection(int fd);
 	void DelConnection(int fd);
 
-	void HandlePackage(Package* pack);
+	void HandlePackage(Channel* channel,Package* pack);
+	void SendPackage(Channel* channel, Package* pack);
 
 	void setHandlePackageCB(HandlePackageCB cb){
 		handlePackageCB_ = std::move(cb);
