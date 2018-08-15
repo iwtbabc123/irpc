@@ -14,9 +14,12 @@ int main(){
 		printf("error=%d\n",errno);
 		return -1;
 	}
+	netlib_setnonblocking(sockfd);
 	printf("success");
-	sleep(1);
+	//sleep(1);
 	//char buff[] = "send something to server!";
+
+	
 
 	unsigned char buf[] = "abcdefgh";
 	Package* pack = new Package();
@@ -25,6 +28,7 @@ int main(){
 
 	netlib_send(sockfd, (void*)buffer, pack->GetLength());
 	
+
 	unsigned char buf2[1024] = {0};
 	int len = netlib_recv(sockfd, buf2, 1024);
 	if (len <= 0){

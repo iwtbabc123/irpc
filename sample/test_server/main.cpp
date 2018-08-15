@@ -11,3 +11,5 @@ int main(){
 	dispatcher.loop();
 	return 0;
 }
+
+//g++ main.cpp -I../../net ../../net/libnet.a -o ../../bin/test_server -L/usr/local/lib -lev --std=c++11
