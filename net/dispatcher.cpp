@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "dispatcher.h"
+#include "package.h"
 
 namespace inet{
 
@@ -26,6 +27,10 @@ void Dispatcher::DelConnection(int fd){
 	if (iter != channel_map_.end()){
 		channel_map_.erase(fd);
 	}
+}
+
+void Dispatcher::HandlePackage(Package* pack){
+	handlePackageCB_(pack);
 }
 
 }

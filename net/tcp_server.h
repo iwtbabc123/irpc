@@ -7,6 +7,8 @@ namespace inet{
 
 class Dispatcher;
 
+class Package;
+
 class TcpServer{
 
 public:
@@ -15,7 +17,7 @@ public:
 
 	void start();
 
-	//virtual HandlePackage();
+	virtual void HandlePackage(Package* pack);
 
 private:
 	Dispatcher* dispatcher_;

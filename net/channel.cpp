@@ -57,7 +57,8 @@ void Channel::OnRead(){
 			uint32_t package_len = pack->GetLength();
 			
 			//deal real package
-			printf("ReadPackage:%d,%d,%s\n",pack->GetServiceId(),pack->GetCommandId(),pack->GetBodyData());
+			//printf("ReadPackage:%d,%d,%s\n",pack->GetServiceId(),pack->GetCommandId(),pack->GetBodyData());
+			dispatcher_->HandlePackage(pack);
 
 			in_buffer_.Read(nullptr, package_len);
 			delete pack;

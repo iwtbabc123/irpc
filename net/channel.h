@@ -8,8 +8,6 @@ namespace inet{
 
 class Dispatcher;
 
-//typedef std::function<void()> ReadEventCallback;
-
 class Channel{
 
 public:
@@ -23,8 +21,6 @@ public:
 	void OnRead();
 	void OnWrite();
 
-	//void SetReadCallback(ReadEventCallback cb){readCallack_ = std::move(cb);}
-
 private:
 	Dispatcher* dispatcher_;
 	int fd_;
@@ -32,8 +28,6 @@ private:
 
 	Buffer in_buffer_;  //read socket buffer
 	Buffer out_buffer_;  //write to socket buffer
-
-	//ReadEventCallback readCallack_;
 
 };
 
