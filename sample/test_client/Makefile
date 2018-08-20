@@ -17,18 +17,18 @@ CCFLAGS += -std=c++11
 
 LIBS = ../../net/libnet.a
 
-OBJS = main.o
+OBJS = client.o
 
-TARGET = $(BIN_HOME)/server
+TARGET = $(BIN_HOME)/test_client
 
 all:  $(TARGET) cleantmp
-$(BIN_HOME)/server: $(OBJS) $(LIBS)
+$(TARGET): $(OBJS) $(LIBS)
 	$(CC) $(CCFLAGS) $^ -o $@ $(LDFLAGS)
 cleantmp:
 	rm -f *.o
 clean:
 	rm -f *.o
-	rm -f $(BIN_HOME)/server
+	rm -f $(TARGET)
 	
 # make rule
 %.o : %.c

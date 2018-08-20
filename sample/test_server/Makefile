@@ -19,16 +19,16 @@ LIBS = ../../net/libnet.a
 
 OBJS = main.o
 
-TARGET = $(BIN_HOME)/server
+TARGET = $(BIN_HOME)/test_server
 
 all:  $(TARGET) cleantmp
-$(BIN_HOME)/server: $(OBJS) $(LIBS)
+$(TARGET): $(OBJS) $(LIBS)
 	$(CC) $(CCFLAGS) $^ -o $@ $(LDFLAGS)
 cleantmp:
 	rm -f *.o
 clean:
 	rm -f *.o
-	rm -f $(BIN_HOME)/server
+	rm -f $(TARGET)
 	
 # make rule
 %.o : %.c
