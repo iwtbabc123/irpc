@@ -9,6 +9,8 @@ class Dispatcher;
 
 class Package;
 
+class Channel;
+
 class TcpServer{
 
 public:
@@ -17,7 +19,9 @@ public:
 
 	void start();
 
-	virtual void HandlePackage(Package* pack);
+	virtual void HandlePackage(Channel* channel, Package* pack);
+
+	virtual void SendPackage(Channel* channel, Package* pack);
 
 private:
 	Dispatcher* dispatcher_;

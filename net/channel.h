@@ -21,6 +21,8 @@ public:
 	void OnRead();
 	void OnWrite();
 
+	void Send(void* data, int len);
+
 private:
 	Dispatcher* dispatcher_;
 	int fd_;

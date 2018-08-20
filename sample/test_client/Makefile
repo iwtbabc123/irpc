@@ -17,9 +17,9 @@ CCFLAGS += -std=c++11
 
 LIBS = ../../net/libnet.a
 
-OBJS = main.o
+OBJS = client.o
 
-TARGET = $(BIN_HOME)/test_server
+TARGET = $(BIN_HOME)/test_client
 
 all:  $(TARGET) cleantmp
 $(TARGET): $(OBJS) $(LIBS)

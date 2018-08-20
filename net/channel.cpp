@@ -58,7 +58,7 @@ void Channel::OnRead(){
 			
 			//deal real package
 			//printf("ReadPackage:%d,%d,%s\n",pack->GetServiceId(),pack->GetCommandId(),pack->GetBodyData());
-			dispatcher_->HandlePackage(pack);
+			dispatcher_->HandlePackage(this, pack);
 
 			in_buffer_.Read(nullptr, package_len);
 			delete pack;
@@ -100,6 +100,16 @@ void Channel::OnWrite(){
 
 	UpdateEvent(fd, events, channel);
 	*/
+}
+
+void Channel::Send(void* data, int len){
+	//out_buffer_.Write(data, len);
+	//TODO
+	int ret = netlib_send(fd_, (char*)data, len);
+	if (ret <= 0){
+		return;
+	}
+	printf("Channel::Send length=%d\n",ret);
 }
 
 }
