@@ -5,8 +5,8 @@ using namespace inet;
 
 int main(){
 
-	Dispatcher dispatcher(8888);
-	TcpServer server(&dispatcher);
+	Dispatcher dispatcher;
+	TcpServer server(&dispatcher, 8888);
 	server.start();
 	dispatcher.loop();
 	return 0;

@@ -6,12 +6,11 @@
 #include <memory>
 #include <functional>
 #include <ev++.h>
-#include "acceptor.h"
 #include "channel.h"
 
 namespace inet{
 
-class Acceptor;
+//class Acceptor;
 class Package;
 
 typedef std::unique_ptr<Channel> ChannelPtr;
@@ -21,7 +20,7 @@ class Dispatcher{
 public:
 	typedef std::function<void(Channel*,Package*)> HandlePackageCB;
 
-	Dispatcher(uint16_t port);
+	Dispatcher();
 
 	void loop();
 
@@ -37,7 +36,7 @@ public:
 
 private:
 	uint16_t port_;
-	std::unique_ptr<Acceptor> acceptor_;
+	//std::unique_ptr<Acceptor> acceptor_;
 	ev::default_loop loop_;
 	typedef std::map<int, ChannelPtr> ChannelMap;
 	ChannelMap channel_map_;
