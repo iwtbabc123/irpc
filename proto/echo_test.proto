@@ -4,26 +4,20 @@ package echo;
 option py_generic_services = true;
 option cc_generic_services = true;
 
-message Void {}
-
 message RequestMessage
 {
-	string msg = 1;
+	int32 id = 1;
+	string msg = 2;
 }
 
 message ResponseMessage
 {
-	string msg = 1;
+	int32 id = 1;
+	string msg = 2;
 }
 
-//客户端发给服务器
+//rpc service
 service IEchoService
 {
 	rpc echo(RequestMessage) returns(ResponseMessage);
-}
-
-//服务器发给客户端
-service IEchoClient
-{
-	rpc echo_reply(ResponseMessage) returns(Void);
 }

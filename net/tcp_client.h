@@ -20,13 +20,13 @@ public:
 	TcpClient(Dispatcher* dispatcher, const char* ip, uint16_t port);
 	virtual ~TcpClient();
 
-	void start();
+	virtual void start();
 
 	virtual void HandlePackage(Channel* channel, Package* pack);
 
 	virtual void SendPackage(Package* pack);
 
-private:
+protected:
 	Dispatcher* dispatcher_;
 	std::unique_ptr<Connector> connector_;
 };
