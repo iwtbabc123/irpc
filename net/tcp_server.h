@@ -1,7 +1,10 @@
 #ifndef __NET_TCP_SERVER_H__
 #define __NET_TCP_SERVER_H__
 
+#include <stdint.h>
+#include <memory>
 #include <ev++.h>
+#include "acceptor.h"
 
 namespace inet{
 
@@ -14,7 +17,7 @@ class Channel;
 class TcpServer{
 
 public:
-	TcpServer(Dispatcher* dispatcher);
+	TcpServer(Dispatcher* dispatcher, uint16_t port);
 	virtual ~TcpServer();
 
 	void start();
@@ -25,6 +28,7 @@ public:
 
 private:
 	Dispatcher* dispatcher_;
+	std::unique_ptr<Acceptor> acceptor_;
 };
 
 }
