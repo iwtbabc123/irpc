@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 #include <memory>
-#include <ev++.h>
 #include "acceptor.h"
 
 namespace inet{

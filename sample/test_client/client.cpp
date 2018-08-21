@@ -1,13 +1,19 @@
+/*
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
 #include "socket_util.h"
 #include "package.h"
+*/
+
+#include "dispatcher.h"
+#include "tcp_client.h"
+#include "package.h"
 
 using namespace inet;
 
 int main(){
-
+	/*
 	int sockfd = netlib_socket();
 	int ret = netlib_connect(sockfd,"127.0.0.1", 8888);
 	if (ret < 0){
@@ -33,15 +39,17 @@ int main(){
 	printf("netlib_recv success\n");
 	Package* pack2 = Package::ReadPackage(buf2, len);
 	printf("netlib_recv %d, %d, %s\n",pack2->GetServiceId(), pack2->GetCommandId(), pack2->GetBodyData());
-
-	/*
-	unsigned char buf2[] = "abcdefgh";
-	Package* pack2 = new Package();
-	pack2->WriteAll(1,3, buf2,(int)sizeof(buf));
-	unsigned char* buffer2 = pack2->GetBuffer();
-	netlib_send(sockfd, (void*)buffer2, pack2->GetLength());
 	*/
-	sleep(1);
+
+	unsigned char buf[] = "abcdefgh";
+	Package* pack = new Package();
+	pack->WriteAll(1,2, buf,(int)sizeof(buf));
+
+	Dispatcher dispatcher;
+	TcpClient client(&dispatcher, "127.0.0.1", 8888);
+	client.start();
+	client.SendPackage(pack);
+	dispatcher.loop();
 	return 0;
 }
 
