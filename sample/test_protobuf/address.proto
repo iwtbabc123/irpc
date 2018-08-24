@@ -1,0 +1,11 @@
+syntax="proto3";
+package tutorial;
+
+message Persion {
+    string name = 1;
+    int32 age = 2;
+}
+
+message AddressBook {
+    repeated Persion persion = 1;
+}
