@@ -49,10 +49,10 @@ void Connector::OnRead(){
 	int bytes = netlib_recv(fd_, buffer, 1024);
 	printf("Dispatcher::OnRead %d bytes\n", bytes);
 	if (bytes == 0){  //close
-		dispatcher_->DelConnection(fd_);
+		//dispatcher_->DelConnection(fd_);
 	}
 	else if(bytes < 0){  //error
-		dispatcher_->DelConnection(fd_);
+		//dispatcher_->DelConnection(fd_);
 	}
 	else{
 		in_buffer_.Write(buffer, bytes);

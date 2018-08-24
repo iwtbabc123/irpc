@@ -19,13 +19,13 @@ public:
 	TcpServer(Dispatcher* dispatcher, uint16_t port);
 	virtual ~TcpServer();
 
-	void start();
+	virtual void start();
 
 	virtual void HandlePackage(Channel* channel, Package* pack);
 
 	virtual void SendPackage(Channel* channel, Package* pack);
 
-private:
+protected:
 	Dispatcher* dispatcher_;
 	std::unique_ptr<Acceptor> acceptor_;
 };
