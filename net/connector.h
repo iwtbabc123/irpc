@@ -23,6 +23,8 @@ public:
 
 	void Send(void* data, int len);
 
+	int Fd(){return fd_;}
+
 private:
 	Dispatcher* dispatcher_;
 	const char* ip_;

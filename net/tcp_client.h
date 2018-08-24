@@ -26,6 +26,8 @@ public:
 
 	virtual void SendPackage(Package* pack);
 
+	int ConnectFd(){return connector_->Fd();}
+
 protected:
 	Dispatcher* dispatcher_;
 	std::unique_ptr<Connector> connector_;

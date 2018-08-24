@@ -17,7 +17,7 @@ message ResponseMessage
 }
 
 //rpc service
-service IEchoService
+service EchoService
 {
 	rpc echo(RequestMessage) returns(ResponseMessage);
 }

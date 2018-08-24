@@ -1,9 +1,13 @@
+#include <google/protobuf/message.h>
 #include "rpc_channel.h"
+#include "package.h"
+#include "socket_util.h"
+
+using namespace inet;
 
 namespace irpc{
 
-RpcChannel::RpcChannel(google::protobuf::Service* service){
-	service_ = service;
+RpcChannel::RpcChannel(int sockfd):sockfd_(sockfd){
 }
 
 RpcChannel::~RpcChannel(){
@@ -17,26 +21,16 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
             ::google::protobuf::Closure*){
 				std::string serialized_data = request->SerializeAsString();
 				uint32_t idx = method->index();
-				uint32_t total_len = serialzed_data.length() + 8;
+				Package* package = new Package();
 
-				char s[total_len+1];
-				snprintf(s, HEAD_LENGTH+1, "%s", (char*)&total_len);
-				snprintf(s+HEAD_LENGTH, HEAD_SERVER_IDX+1, "%s", (char*)&idx);
-				snprintf(s+TOTAL_HEAD_LEN, total_len + 1 - TOTAL_HEAD_LEN, "%s", serialized_data.c_str());
+				unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char*) * (serialized_data.size()+1));
+				strcpy((char*)data, serialized_data.c_str());
+				package->WriteAll(idx, 0, data, serialized_data.size());
 
+				unsigned char* data2 = package->GetBuffer();
+				int ret = netlib_send(sockfd_, (void*)data2, package->GetLength());
+				if (ret <= 0){
+					return;
+				}
 			}
-
-void RpcChannel::ReadData(const char* buffer, int len){
-	int index = 0;
-	google::protobuf::Message* message;
-	message->ParseFromString();
-
-	google::protobuf::ServiceDescriptor* dispatcher = service_->GetDescriptor();
-	google::protobuf::MethodDescriptor* method = dispatcher->method(index);
-
-	service_->CallMethod(method, nullptr, message, nullptr, nullptr);
-}
-
-
-
 }

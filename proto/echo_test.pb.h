@@ -292,16 +292,16 @@ class ResponseMessage : public ::google::protobuf::Message /* @@protoc_insertion
 };
 // ===================================================================
 
-class IEchoService_Stub;
+class EchoService_Stub;
 
-class IEchoService : public ::google::protobuf::Service {
+class EchoService : public ::google::protobuf::Service {
  protected:
   // This class should be treated as an abstract interface.
-  inline IEchoService() {};
+  inline EchoService() {};
  public:
-  virtual ~IEchoService();
+  virtual ~EchoService();
 
-  typedef IEchoService_Stub Stub;
+  typedef EchoService_Stub Stub;
 
   static const ::google::protobuf::ServiceDescriptor* descriptor();
 
@@ -324,19 +324,19 @@ class IEchoService : public ::google::protobuf::Service {
     const ::google::protobuf::MethodDescriptor* method) const;
 
  private:
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(IEchoService);
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(EchoService);
 };
 
-class IEchoService_Stub : public IEchoService {
+class EchoService_Stub : public EchoService {
  public:
-  IEchoService_Stub(::google::protobuf::RpcChannel* channel);
-  IEchoService_Stub(::google::protobuf::RpcChannel* channel,
+  EchoService_Stub(::google::protobuf::RpcChannel* channel);
+  EchoService_Stub(::google::protobuf::RpcChannel* channel,
                    ::google::protobuf::Service::ChannelOwnership ownership);
-  ~IEchoService_Stub();
+  ~EchoService_Stub();
 
   inline ::google::protobuf::RpcChannel* channel() { return channel_; }
 
-  // implements IEchoService ------------------------------------------
+  // implements EchoService ------------------------------------------
 
   void echo(::google::protobuf::RpcController* controller,
                        const ::echo::RequestMessage* request,
@@ -345,7 +345,7 @@ class IEchoService_Stub : public IEchoService {
  private:
   ::google::protobuf::RpcChannel* channel_;
   bool owns_channel_;
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(IEchoService_Stub);
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(EchoService_Stub);
 };
 
 

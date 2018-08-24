@@ -1,7 +1,7 @@
 #ifndef __IRPC_CLIENT_H__
 #define __IRPC_CLIENT_H__
 
-#include "tcp_server.h"
+#include "tcp_client.h"
 #include "rpc_channel.h"
 
 using namespace inet;
@@ -12,10 +12,6 @@ class RpcClient : public TcpClient{
 
 public:
 	RpcClient(Dispatcher* dispatcher, const char* ip, uint16_t port);
-
-private:
-	RpcChannel
-
 };
 
 }

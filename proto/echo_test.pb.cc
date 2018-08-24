@@ -127,12 +127,12 @@ void AddDescriptorsImpl() {
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\017echo_test.proto\022\004echo\")\n\016RequestMessag"
       "e\022\n\n\002id\030\001 \001(\005\022\013\n\003msg\030\002 \001(\t\"*\n\017ResponseMe"
-      "ssage\022\n\n\002id\030\001 \001(\005\022\013\n\003msg\030\002 \001(\t2C\n\014IEchoS"
-      "ervice\0223\n\004echo\022\024.echo.RequestMessage\032\025.e"
-      "cho.ResponseMessageB\006\200\001\001\220\001\001b\006proto3"
+      "ssage\022\n\n\002id\030\001 \001(\005\022\013\n\003msg\030\002 \001(\t2B\n\013EchoSe"
+      "rvice\0223\n\004echo\022\024.echo.RequestMessage\032\025.ec"
+      "ho.ResponseMessageB\006\200\001\001\220\001\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 195);
+      descriptor, 194);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "echo_test.proto", &protobuf_RegisterTypes);
 }
@@ -742,18 +742,18 @@ void ResponseMessage::InternalSwap(ResponseMessage* other) {
 
 // ===================================================================
 
-IEchoService::~IEchoService() {}
+EchoService::~EchoService() {}
 
-const ::google::protobuf::ServiceDescriptor* IEchoService::descriptor() {
+const ::google::protobuf::ServiceDescriptor* EchoService::descriptor() {
   protobuf_echo_5ftest_2eproto::protobuf_AssignDescriptorsOnce();
   return protobuf_echo_5ftest_2eproto::file_level_service_descriptors[0];
 }
 
-const ::google::protobuf::ServiceDescriptor* IEchoService::GetDescriptor() {
+const ::google::protobuf::ServiceDescriptor* EchoService::GetDescriptor() {
   return descriptor();
 }
 
-void IEchoService::echo(::google::protobuf::RpcController* controller,
+void EchoService::echo(::google::protobuf::RpcController* controller,
                          const ::echo::RequestMessage*,
                          ::echo::ResponseMessage*,
                          ::google::protobuf::Closure* done) {
@@ -761,7 +761,7 @@ void IEchoService::echo(::google::protobuf::RpcController* controller,
   done->Run();
 }
 
-void IEchoService::CallMethod(const ::google::protobuf::MethodDescriptor* method,
+void EchoService::CallMethod(const ::google::protobuf::MethodDescriptor* method,
                              ::google::protobuf::RpcController* controller,
                              const ::google::protobuf::Message* request,
                              ::google::protobuf::Message* response,
@@ -780,7 +780,7 @@ void IEchoService::CallMethod(const ::google::protobuf::MethodDescriptor* method
   }
 }
 
-const ::google::protobuf::Message& IEchoService::GetRequestPrototype(
+const ::google::protobuf::Message& EchoService::GetRequestPrototype(
     const ::google::protobuf::MethodDescriptor* method) const {
   GOOGLE_DCHECK_EQ(method->service(), descriptor());
   switch(method->index()) {
@@ -793,7 +793,7 @@ const ::google::protobuf::Message& IEchoService::GetRequestPrototype(
   }
 }
 
-const ::google::protobuf::Message& IEchoService::GetResponsePrototype(
+const ::google::protobuf::Message& EchoService::GetResponsePrototype(
     const ::google::protobuf::MethodDescriptor* method) const {
   GOOGLE_DCHECK_EQ(method->service(), descriptor());
   switch(method->index()) {
@@ -806,18 +806,18 @@ const ::google::protobuf::Message& IEchoService::GetResponsePrototype(
   }
 }
 
-IEchoService_Stub::IEchoService_Stub(::google::protobuf::RpcChannel* channel)
+EchoService_Stub::EchoService_Stub(::google::protobuf::RpcChannel* channel)
   : channel_(channel), owns_channel_(false) {}
-IEchoService_Stub::IEchoService_Stub(
+EchoService_Stub::EchoService_Stub(
     ::google::protobuf::RpcChannel* channel,
     ::google::protobuf::Service::ChannelOwnership ownership)
   : channel_(channel),
     owns_channel_(ownership == ::google::protobuf::Service::STUB_OWNS_CHANNEL) {}
-IEchoService_Stub::~IEchoService_Stub() {
+EchoService_Stub::~EchoService_Stub() {
   if (owns_channel_) delete channel_;
 }
 
-void IEchoService_Stub::echo(::google::protobuf::RpcController* controller,
+void EchoService_Stub::echo(::google::protobuf::RpcController* controller,
                               const ::echo::RequestMessage* request,
                               ::echo::ResponseMessage* response,
                               ::google::protobuf::Closure* done) {
