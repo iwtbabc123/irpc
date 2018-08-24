@@ -5,6 +5,14 @@
 
 namespace irpc{
 
+RpcServer::RpcServer(Dispatcher* dispatcher, uint16_t port):TcpServer(dispatcher, port){
+
+}
+
+RpcServer::~RpcServer(){
+	
+}
+
 void RpcServer::HandlePackage(Channel* channel, Package* pack){
 	uint16_t service_id = pack->GetServiceId();
 	const ::google::protobuf::ServiceDescriptor* service_descriptor = service_->GetDescriptor();

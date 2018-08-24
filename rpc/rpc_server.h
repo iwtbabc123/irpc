@@ -11,6 +11,9 @@ namespace irpc{
 class RpcServer:public TcpServer{
 
 public:
+	RpcServer(Dispatcher* dispatcher, uint16_t port);
+
+	virtual ~RpcServer();
 
 	void HandlePackage(Channel* channel, Package* pack) override;
 

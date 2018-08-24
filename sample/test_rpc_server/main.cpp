@@ -1,9 +1,13 @@
 #include <string>
+#include <google/protobuf/service.h>
 #include "echo_test.pb.h"
-
+#include "dispatcher.h"
+#include "rpc_server.h"
 
 using namespace echo;
-
+using namespace inet;
+using namespace irpc;
+//rpc service
 class EchoServiceImpl : public EchoService{
 
 public:
