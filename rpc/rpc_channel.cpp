@@ -25,7 +25,7 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
 
 				unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char*) * (serialized_data.size()+1));
 				strcpy((char*)data, serialized_data.c_str());
-				package->WriteAll(idx, 0, data, serialized_data.size());
+				package->WriteAll(idx, 1, data, serialized_data.size());
 
 				unsigned char* data2 = package->GetBuffer();
 				int ret = netlib_send(sockfd_, (void*)data2, package->GetLength());
