@@ -6,5 +6,13 @@ namespace irpc{
 RpcClient::RpcClient(Dispatcher* dispatcher, const char* ip, uint16_t port):TcpClient(dispatcher, ip, port){
 }
 
+RpcClient::~RpcClient(){
+
+}
+
+void RpcClient::HandlePackage(Channel* channel, Package* pack){
+	
+}
+
 }
 

@@ -12,6 +12,10 @@ class RpcClient : public TcpClient{
 
 public:
 	RpcClient(Dispatcher* dispatcher, const char* ip, uint16_t port);
+
+	virtual ~RpcClient();
+
+	void HandlePackage(Channel* channel, Package* pack) override;
 };
 
 }

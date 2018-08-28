@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <google/protobuf/message.h>
 #include "rpc_channel.h"
 #include "package.h"
@@ -23,12 +24,15 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
 				uint32_t idx = method->index();
 				Package* package = new Package();
 
-				unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char*) * (serialized_data.size()+1));
-				strcpy((char*)data, serialized_data.c_str());
-				package->WriteAll(idx, 0, data, serialized_data.size());
-
-				unsigned char* data2 = package->GetBuffer();
-				int ret = netlib_send(sockfd_, (void*)data2, package->GetLength());
+				int size = serialized_data.size();
+				char* data = (char*)malloc(sizeof(char*) * (size+1));
+				memcpy(data, serialized_data.c_str(), size);
+				package->WriteAll(idx, 1, (unsigned char*)data, size);
+				printf("RpcChannel::CallMethod:%d,%d,%s,%d\n",idx,1,data,size);
+				free(data);
+				unsigned char* buffer = package->GetBuffer();
+				int ret = netlib_send(sockfd_, (void*)buffer, package->GetLength());
+				delete package;
 				if (ret <= 0){
 					return;
 				}

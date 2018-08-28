@@ -10,7 +10,6 @@ namespace inet{
 TcpServer::TcpServer(Dispatcher* dispatcher, uint16_t port):
 		dispatcher_(dispatcher),
 		acceptor_(new Acceptor(dispatcher, port)){
-	dispatcher_->setHandlePackageCB(std::bind(&TcpServer::HandlePackage, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 TcpServer::~TcpServer(){
@@ -18,6 +17,7 @@ TcpServer::~TcpServer(){
 }
 
 void TcpServer::start(){
+	dispatcher_->setHandlePackageCB(std::bind(&TcpServer::HandlePackage, this, std::placeholders::_1, std::placeholders::_2));
 	acceptor_->listen();
 }
 

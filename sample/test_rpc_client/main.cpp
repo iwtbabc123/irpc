@@ -15,11 +15,11 @@ int main(){
 
 	RpcChannel channel(client.ConnectFd());
 	//MyRpcController controller;
-	MyServiceImpl::Stub stub(&channel);
+	EchoService::Stub stub(&channel);
 	RequestMessage request;
 	ResponseMessage response;
-	request->set_id(1);
-	request->set_msg("abc");
+	request.set_id(1);
+	request.set_msg("abc");
 	stub.echo(nullptr, &request, &response, nullptr);
 
 	dispatcher.loop();
