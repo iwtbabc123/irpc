@@ -10,7 +10,6 @@ namespace inet{
 TcpClient::TcpClient(Dispatcher* dispatcher, const char* ip, uint16_t port):
 		dispatcher_(dispatcher),
 		connector_(new Connector(dispatcher, ip, port)){
-	dispatcher_->setHandlePackageCB(std::bind(&TcpClient::HandlePackage, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 TcpClient::~TcpClient(){
@@ -18,6 +17,7 @@ TcpClient::~TcpClient(){
 }
 
 void TcpClient::start(){
+	dispatcher_->setHandlePackageCB(std::bind(&TcpClient::HandlePackage, this, std::placeholders::_1, std::placeholders::_2));
 	connector_->connect();  //TODO,改为nonblocking
 }
 

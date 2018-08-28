@@ -26,6 +26,16 @@ void RpcServer::HandlePackage(Channel* channel, Package* pack){
 	request->ParseFromString(str);
 	RpcContrller rpc_controller;
 	service_->CallMethod(method_descriptor, &rpc_controller, request, response, nullptr);
+
+	std::string serialized_data = response->SerializeAsString();
+	int size = serialized_data.size();
+	char* data = (char*)malloc(sizeof(char*) * (size+1));
+	memcpy(data, serialized_data.c_str(), size);
+	Package* package = new Package();
+	package->WriteAll(service_id, 2, (unsigned char*)data, size);
+	free(data);
+	SendPackage(channel, package);
+	delete package;
 }
 
 void RpcServer::RegisterService(::google::protobuf::Service* service){

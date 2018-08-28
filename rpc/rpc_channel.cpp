@@ -28,10 +28,11 @@ void RpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor* method,
 				char* data = (char*)malloc(sizeof(char*) * (size+1));
 				memcpy(data, serialized_data.c_str(), size);
 				package->WriteAll(idx, 1, (unsigned char*)data, size);
-				printf("RpcChannel::CallMethod:%d,%d,%s,%d",idx,1,data,size);
+				printf("RpcChannel::CallMethod:%d,%d,%s,%d\n",idx,1,data,size);
 				free(data);
 				unsigned char* buffer = package->GetBuffer();
 				int ret = netlib_send(sockfd_, (void*)buffer, package->GetLength());
+				delete package;
 				if (ret <= 0){
 					return;
 				}
