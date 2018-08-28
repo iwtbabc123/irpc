@@ -21,7 +21,7 @@ public:
 		}
 		int id = request->id();
 		std::string str = request->msg();
-		printf("EchoServiceImpl::echo=%d,%s",id, str.c_str());
+		printf("EchoServiceImpl::echo=%d,%s\n",id, str.c_str());
 		response->set_id(id+1);
 		response->set_msg(str);
 	}
